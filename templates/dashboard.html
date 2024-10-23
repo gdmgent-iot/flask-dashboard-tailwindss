@@ -23,7 +23,14 @@
             <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
         </div>
     </div>
+    <!-- CHART.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <!-- MQTT -->
+    <script src="https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
+    
+    <!-- EXAMPLE CODE TO RENDER A CHART -->
     <script>
         const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
         const yValues = [55, 49, 44, 24, 15];
@@ -46,6 +53,6 @@
             }
           }
         });
-        </script>
+    </script>
 </body>
 </html>
