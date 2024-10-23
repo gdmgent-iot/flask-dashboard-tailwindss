@@ -66,8 +66,9 @@ client.on("message", (topic, message) => {
     }
 });
 
-function updateDataset(chart, temp) {
-    chart.data.datasets[0].data.push(temp);
+
+function updateDataset(chart, val) {
+    chart.data.datasets[0].data.push(val);
     chart.data.labels.push(new Date().toLocaleTimeString());
 }
 
