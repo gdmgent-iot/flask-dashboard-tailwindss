@@ -4,8 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
 </head>
 <body>
     <h1>My IOT Dashboard</h1>
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-1/4 h-screen bg-gray-800 text-white p-4">
+            <h2 class="text-xl font-bold mb-4">Sidebar</h2>
+            <ul>
+                <li class="mb-2"><a href="#" class="hover:text-gray-400">Link 1</a></li>
+                <li class="mb-2"><a href="#" class="hover:text-gray-400">Link 2</a></li>
+                <li class="mb-2"><a href="#" class="hover:text-gray-400">Link 3</a></li>
+            </ul>
+        </div>
+        <!-- Main Container -->
+        <div class="w-3/4 h-screen p-4">
+            <h2 class="text-2xl font-bold mb-4">Main Content</h2>
+            <p>This is the main content area.</p>
+        </div>
+    </div>
 </body>
 </html>
