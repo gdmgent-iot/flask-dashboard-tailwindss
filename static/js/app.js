@@ -30,6 +30,7 @@ const humidityChart = new Chart("humidityChart", {
     data: {
         labels: [],
         datasets: [{
+            backgroundColor: "blue",
             data: []
         }]
     },
@@ -81,13 +82,13 @@ client.on("connect", () => {
 // MQTT message
 client.on("message", (topic, message) => {
     const data = message.toString();
-    const temp = parseFloat(data);
-    console.log("MQTT message: ", temp);
+    const sensorValue = parseFloat(data);
+    console.log("MQTT message: ", sensorValue);
     console.log('Topic: ', topic);
 
     if(topic == topicTemperature) {
         // update dataset
-        updateDataset(temperatureChart, temp);
+        updateDataset(temperatureChart, sensorValue);
 
         // limit to x bars max
         limitToXBars(temperatureChart, 10);
@@ -100,7 +101,14 @@ client.on("message", (topic, message) => {
     }
 
     if(topic == topicHumidity) {
-        console.log("add to humidity chart");
+        // update dataset
+        updateDataset(humidityChart, sensorValue);
+
+        // limit to x bars max
+        limitToXBars(humidityChart, 20);
+
+        // update chart
+        humidityChart.update();
     }
 });
 
