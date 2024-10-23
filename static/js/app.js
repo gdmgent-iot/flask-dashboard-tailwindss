@@ -47,7 +47,7 @@ client.on("connect", () => {
     });
 
     // subscribe to topic: Humidity
-
+    client.subscribe(topicHumidity);
 
 });
 
@@ -58,7 +58,7 @@ client.on("message", (topic, message) => {
     console.log("MQTT message: ", temp);
     console.log('Topic: ', topic);
 
-    if(topic == 'IOT/temperature') {
+    if(topic == topicTemperature) {
         // update dataset
         updateDataset(temperatureChart, temp);
 
@@ -70,6 +70,10 @@ client.on("message", (topic, message) => {
 
         // update chart
         temperatureChart.update();
+    }
+
+    if(topic == topicHumidity) {
+        console.log("add to humidity chart");
     }
 });
 
