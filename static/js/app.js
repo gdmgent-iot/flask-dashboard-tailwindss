@@ -1,5 +1,5 @@
-const xValues = ["11:30:00", "11:30:05", "11:30:10"]; 
-const yValues = [20, 21, 22];
+const xValues = []; 
+const yValues = [];
 
 const chart = new Chart("myChart", {
     type: "bar",
@@ -50,16 +50,42 @@ client.on("message", (topic, message) => {
     const temp = parseFloat(data);
     console.log("MQTT message", temp);
 
-    // update chart directly
+    // update dataset
+    updateDataset(temp);
+
+    // limit to x bars max
+    limitToXBars(10);
+
+    // give cool colors to chart
+    giveCoolColorsToBars();
+
+    // update chart
+    chart.update();
+});
+
+function updateDataset(temp) {
     chart.data.datasets[0].data.push(temp);
     chart.data.labels.push(new Date().toLocaleTimeString());
-    chart.update();
+}
 
-    // keep only last 5
-    const maxLen = 5;
+function limitToXBars(maxLen = 5) {
     if (chart.data.datasets[0].data.length > maxLen) {
         chart.data.datasets[0].data.shift();
         chart.data.labels.shift();
-        chart.update();
     }
-});
+}
+
+function giveCoolColorsToBars() {
+    // temp > 27 make red
+    // temp between 25 & 27 make orange
+    // temp < 25 make green
+    chart.data.datasets[0].backgroundColor = chart.data.datasets[0].data.map((temp) => {
+        if (temp > 27) {
+            return "red";
+        } else if (temp > 25) {
+            return "orange";
+        } else {
+            return "green";
+        }
+    });
+}
