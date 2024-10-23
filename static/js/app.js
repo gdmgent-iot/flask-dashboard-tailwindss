@@ -26,7 +26,7 @@ const temperatureChart = new Chart("temperatureChart", {
 });
 
 const humidityChart = new Chart("humidityChart", {
-    type: "bar",
+    type: "line",
     data: {
         labels: [],
         datasets: [{
@@ -53,6 +53,27 @@ const humidityChart = new Chart("humidityChart", {
     }
 });
 
+const pressureChart = new Chart("pressureChart", {
+    type: "doughnut",
+    data: {
+        labels: [],
+        datasets: [{
+            backgroundColor: ["#3e95cd", "FCFCFC"],
+            data: []
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },
+        title: {
+            display: true,
+            text: "Luchtdruk 🌬"
+        }
+
+    }
+});
+
 // MQTT client
 const mqttPath = "ws://mqtt.eclipseprojects.io/mqtt";
 const client = mqtt.connect(mqttPath);
@@ -60,6 +81,7 @@ const client = mqtt.connect(mqttPath);
 // MQTT topics
 const topicTemperature = "IOT/temperature";
 const topicHumidity = "IOT/humidity";
+const topicPressure = "IOT/pressure";
 
 // MQTT connection
 client.on("connect", () => {
@@ -76,6 +98,9 @@ client.on("connect", () => {
 
     // subscribe to topic: Humidity
     client.subscribe(topicHumidity);
+
+    // subscribe to topic: Pressure
+    client.subscribe(topicPressure);
 
 });
 
@@ -109,6 +134,21 @@ client.on("message", (topic, message) => {
 
         // update chart
         humidityChart.update();
+    }
+
+    if(topic == topicPressure) {
+        // make dataset empty
+        pressureChart.data.datasets[0].data = [];
+
+        // update dataset
+        updateDataset(pressureChart, sensorValue);
+        updateDataset(pressureChart, 1100 - sensorValue);
+
+        // limit to x bars max
+        limitToXBars(pressureChart, 2);
+
+        // update chart
+        pressureChart.update();
     }
 });
 
