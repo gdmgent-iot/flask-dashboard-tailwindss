@@ -12,7 +12,34 @@ const temperatureChart = new Chart("temperatureChart", {
         },
         title: {
             display: true,
-            text: "Temperatuur"
+            text: "Temperatuur 🥵"
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 40
+                }
+            }]
+        }
+    }
+});
+
+const humidityChart = new Chart("humidityChart", {
+    type: "bar",
+    data: {
+        labels: [],
+        datasets: [{
+            data: []
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },
+        title: {
+            display: true,
+            text: "Vochtigheid 💦"
         },
         scales: {
             yAxes: [{
