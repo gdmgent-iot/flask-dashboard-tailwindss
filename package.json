@@ -2,5 +2,8 @@
   "dependencies": {
     "mqtt": "^5.10.1",
     "tailwindcss": "^3.4.14"
+  },
+  "scripts":{
+    "tailwind": "npx tailwind -i static/css/input.css -o static/css/output.css --watch"
   }
 }
