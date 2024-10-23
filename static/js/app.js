@@ -31,10 +31,13 @@ const client = mqtt.connect(mqttPath);
 
 // MQTT topics
 const topicTemperature = "IOT/temperature";
+const topicHumidity = "IOT/humidity";
 
 // MQTT connection
 client.on("connect", () => {
     console.log("MQTT connected");
+    
+    // subscribe to topic: Temperature
     client.subscribe(topicTemperature, (err) => {
         if (!err) {
             console.log("MQTT subscribed to", topicTemperature);
@@ -42,6 +45,10 @@ client.on("connect", () => {
             console.log("MQTT subscription failed", err);
         }
     });
+
+    // subscribe to topic: Humidity
+
+
 });
 
 // MQTT message
