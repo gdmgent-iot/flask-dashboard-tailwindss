@@ -1,26 +1,26 @@
-const xValues = []; 
-const yValues = [];
-
 const temperatureChart = new Chart("temperatureChart", {
     type: "bar",
     data: {
-    labels: xValues,
-    datasets: [{
-        backgroundColor: "red",
-        data: yValues
-    }]
+        labels: [],
+        datasets: [{
+            data: []
+        }]
     },
     options: {
-        legend: {display: false},
+        legend: {
+            display: false
+        },
         title: {
             display: true,
-            text: "Temperatuurregistratie"
+            text: "Temperatuur"
         },
         scales: {
-            y: {
-                min: 15,
-                max: 40
-            }
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 40
+                }
+            }]
         }
     }
 });
@@ -48,7 +48,7 @@ client.on("connect", () => {
 client.on("message", (topic, message) => {
     const data = message.toString();
     const temp = parseFloat(data);
-    console.log("MQTT message", temp);
+    console.log("MQTT message: ", temp);
     console.log('Topic: ', topic);
 
     if(topic == 'IOT/temperature') {
